@@ -48,13 +48,42 @@ TempPath = os.path.join("..", "Resources", "Templates", os.path.splitext(os.path
 def calcAeGain(radius, frequency):
     return 17.8*20*math.log10(radius*frequency)
 
-def calcLinkAvailability(a, b, c, d, e, q):
-    return 1-(a*b*(10^(-5))*d*0.62/4*(e^3)*(10^(-q/10)))
+def calcLinkAvailability(a, b, frequency, distance, fadeMargin):
+    return 1-(a*b*(10^(-5))*frequency*0.62/4*(distance^3)*(10^(-fadeMargin/10)))
+
+def calcFreSpaceLoss(distance, frequency):
+    return 20*math.log10(4*3.142*distance*1000/(3/(frequency*10)))
+
+
+def fresnelRadius(distance, frequency):
+    return 17.32*math.sqrt((distance/(4*frequency)))
+
+def fresnelShape(frequency,distance, u):
+
+    incremument = distance/100
+    pointDistance = 0
+    pointCount = 0
+    fresnelShape = []
+
+    for pointDistance in range(distance):
+        next_point  = math.sqrt(((300000000/(frequency*1000000000))*u*(pointDistance*1000-u))/(u+(pointDistance*1000-(u))))
+        fresnelShape.append({'xcoord':pointCount, 'pointDiameter' :next_point})
+
+        pointDistance += incremument
+        ++pointCount
+
+    return fresnelShape
+
+
+def farField(txAntenanDiameter, frequency):
+    return (2*txAntenanDiameter^2)/(300000000/(frequency*1000000000))
+
 
 
 
 def main(pars):
     global Tiles
+    profilePoints = []
 
     resp = ""
     error = frequency = distance = txAntenanDiameter = rxAntenanDiameter\
@@ -139,3 +168,14 @@ def main(pars):
         # error	= True
         # resp	+= "<p>ERROR: required rxCableLosses parameter missing!</p>\n"
         pass
+
+
+
+    profilePoints.append({'fadeMargin':fadeMargin,
+                          'linkAvailability' :calcLinkAvailability(a, b, frequency, distance, rxSensetiviy+powerAtRx),
+                          'farFieldStart':farFieldStart})
+
+    profilePoints.append({'fresnelShape':fresnelShape(frequency,distance, u)})
+
+
+    print json.dumps(profilePoints)
