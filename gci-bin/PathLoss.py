@@ -60,34 +60,38 @@ def calcLinkAvailability(frequency, distance, fadeMargin):
               *(math.pow(10,(-5)))*frequency*0.62/4*(math.pow(distance,3))*(math.pow(10,(-fadeMargin/10))))
 
 def calcFresnelRadius(distance, frequency):
-    return 17.32*math.sqrt((distance/(4*frequency)))
+
+    frezrad =  17.32*math.sqrt((distance/(4*frequency)))
+    print "frezrad " ,frezrad
+
+    return frezrad
 
 def fresnelShape(frequency,distance):
 
     sizeOfIncrument = 100
-    incremument = distance/sizeOfIncrument
-    print "incremument " , incremument
+    Increment = distance/sizeOfIncrument
+    print "Increment " , Increment
     pointDistance = 1
     pointcount = 0
     next_point = 0
     fresnelShape = []
-    pointDistance = incremument
+    pointDistance = Increment
 
-
+#http://www.4gon.co.uk/solutions/technical_fresnel_zones.php
     for pointDistance in range(1,int(distance)):
 
-        mantisa = float((300000000/(frequency*1000000000))*pointDistance*(pointDistance*1000-pointDistance))
-        exponant = float(pointDistance+(pointDistance*1000-(pointDistance)))
-        next_point  = float(math.sqrt(mantisa/exponant))
+        mantisa = float((3/(frequency))*pointDistance*(distance-pointDistance))
+        exponant = float(pointDistance+(distance-(pointDistance)))
+        next_point  = 10* float(math.sqrt(mantisa/exponant))
 
         print "mantisa/exponant ", mantisa/exponant
         print "next_point ", next_point
 
         fresnelShape.append({'xcoord':pointcount, 'pointDiameter' :next_point})
 
-        pointDistance = pointDistance + incremument
-        print "test data: " , pointDistance+incremument
-        print "incremument " , incremument
+        pointDistance = pointDistance + Increment
+        print "test data: " , pointDistance+Increment
+        print "Increment " , Increment
         pointcount += 1
 
     return fresnelShape
