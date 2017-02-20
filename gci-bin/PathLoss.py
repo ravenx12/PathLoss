@@ -12,6 +12,8 @@
 #           rxAntenanGain
 #           txPower
 #           rxSensetiviy
+#           txConnectorLosses
+#           rxConnectorLosses
 #           txCableLosses
 #           rxCableLosses
 #
@@ -35,6 +37,7 @@ import sys
 import cgi
 import cgitb
 import math
+import json
 
 cgitb.enable()
 
@@ -43,51 +46,82 @@ cgitb.enable()
 TempPath = os.path.join("..", "Resources", "Templates", os.path.splitext(os.path.basename(__file__))[0] + ".html")
 
 
-
-
-def calcAeGain(radius, frequency):
-    return 17.8*20*math.log10(radius*frequency)
-
-def calcLinkAvailability(a, b, frequency, distance, fadeMargin):
-    return 1-(a*b*(10^(-5))*frequency*0.62/4*(distance^3)*(10^(-fadeMargin/10)))
+def calcAeGain(AntenanDiameter, frequency):
+    return 17.8*20*math.log10(AntenanDiameter*frequency)
 
 def calcFreSpaceLoss(distance, frequency):
-    return 20*math.log10(4*3.142*distance*1000/(3/(frequency*10)))
+    return -20*math.log10(4*3.142*distance*1000/(3/(frequency*10)))
 
+def calcLinkAvailability(frequency, distance, fadeMargin):
 
-def fresnelRadius(distance, frequency):
+    environmentalFactor = [2,0.3]
+
+    return 1-(environmentalFactor[0]*environmentalFactor[1]
+              *(math.pow(10,(-5)))*frequency*0.62/4*(math.pow(distance,3))*(math.pow(10,(-fadeMargin/10))))
+
+def calcFresnelRadius(distance, frequency):
     return 17.32*math.sqrt((distance/(4*frequency)))
 
-def fresnelShape(frequency,distance, u):
+def fresnelShape(frequency,distance):
 
-    incremument = distance/100
-    pointDistance = 0
-    pointCount = 0
+    sizeOfIncrument = 100
+    incremument = distance/sizeOfIncrument
+    print "incremument " , incremument
+    pointDistance = 1
+    pointcount = 0
+    next_point = 0
     fresnelShape = []
+    pointDistance = incremument
 
-    for pointDistance in range(distance):
-        next_point  = math.sqrt(((300000000/(frequency*1000000000))*u*(pointDistance*1000-u))/(u+(pointDistance*1000-(u))))
-        fresnelShape.append({'xcoord':pointCount, 'pointDiameter' :next_point})
 
-        pointDistance += incremument
-        ++pointCount
+    for pointDistance in range(1,int(distance)):
+
+        mantisa = long((300000000/(frequency*1000000000))*pointDistance*(pointDistance*1000-pointDistance))
+        exponant = long(pointDistance+(pointDistance*1000-(pointDistance)))
+        next_point  = math.sqrt(mantisa/exponant)
+
+        print "mantisa ", mantisa
+        print "exponant ", exponant
+
+        fresnelShape.append({'xcoord':pointcount, 'pointDiameter' :next_point})
+
+        pointDistance = pointDistance + incremument
+        print "test data: " , pointDistance+incremument
+        print "incremument " , incremument
+        pointcount += 1
 
     return fresnelShape
 
 
-def farField(txAntenanDiameter, frequency):
-    return (2*txAntenanDiameter^2)/(300000000/(frequency*1000000000))
+def calcFarField(txAntenanDiameter, frequency):
+    return (2*math.pow(txAntenanDiameter,2))/(300000000/(frequency*1000000000))
 
+#frequency distance txAntenanDiameter rxAntenanDiameter txAntenanGain rxAntenanGain txPower rxSensetiviy
+#txConnectorLosses rxConnectorLosses txCableLosses rxCableLosses
 
+#18 23 1.2 1.2 23 23 10 -100 1 1 1 1
 
 
 def main(pars):
+    print "this is a test"
     global Tiles
     profilePoints = []
+    frequency = 0
+    distance  = 0
+    txAntenanDiameter = 0
+    rxAntenanDiameter = 0
+    txAntenanGain = 0
+    rxAntenanGain = 0
+    txPower = 0
+    rxSensetiviy = 0
+    txConnectorLosses = 0
+    rxConnectorLosses = 0
+    txCableLosses = 0
+    rxCableLosses = 0
 
     resp = ""
-    error = frequency = distance = txAntenanDiameter = rxAntenanDiameter\
-        = txAntenanGain = rxAntenanGain = txPower = rxSensetiviy = txCableLosses = rxCableLosses = None
+  #  error = frequency = distance = txAntenanDiameter = rxAntenanDiameter\
+   #     = txAntenanGain = rxAntenanGain = txPower = rxSensetiviy = txCableLosses = rxCableLosses = None
     args = sys.argv[1:]
 
     print ' '.join(args)
@@ -123,7 +157,7 @@ def main(pars):
 
     try:
         # txAntenanGain = float(pars.getvalue("txAntenanGain"))
-        txAntenanGain = float(sys.argv[4])
+        txAntenanGain = float(sys.argv[5])
     except Exception:
         # error	= True
         # resp	+= "<p>ERROR: required txAntenanGain parameter missing!</p>\n"
@@ -131,7 +165,7 @@ def main(pars):
 
     try:
         # rxAntenanGain = float(pars.getvalue("rxAntenanGain"))
-        rxAntenanGain = float(sys.argv[4])
+        rxAntenanGain = float(sys.argv[6])
     except Exception:
         # error	= True
         # resp	+= "<p>ERROR: required rxAntenanGain parameter missing!</p>\n"
@@ -139,7 +173,7 @@ def main(pars):
 
     try:
         # txPower = float(pars.getvalue("txPower"))
-        txPower = float(sys.argv[4])
+        txPower = float(sys.argv[7])
     except Exception:
         # error	= True
         # resp	+= "<p>ERROR: required txPower parameter missing!</p>\n"
@@ -147,15 +181,30 @@ def main(pars):
 
     try:
         # rxSensetiviy = float(pars.getvalue("rxSensetiviy"))
-        rxSensetiviy = float(sys.argv[4])
+        rxSensetiviy = float(sys.argv[8])
     except Exception:
         # error	= True
         # resp	+= "<p>ERROR: required rxSensetiviy parameter missing!</p>\n"
         pass
 
     try:
+        # txConnectorLosses = float(pars.getvalue("txConnectorLosses"))
+        txConnectorLosses = float(sys.argv[9])
+    except Exception:
+        # error	= True
+        # resp	+= "<p>ERROR: required txConnectorLosses parameter missing!</p>\n"
+        pass
+
+    try:
+        # rxConnectorLosses = float(pars.getvalue("rxConnectorLosses"))
+        rxConnectorLosses = float(sys.argv[10])
+    except Exception:
+        # error	= True
+        # resp	+= "<p>ERROR: required rxConnectorLosses parameter missing!</p>\n"
+        pass
+    try:
         # txCableLosses = float(pars.getvalue("txCableLosses"))
-        txCableLosses = float(sys.argv[4])
+        txCableLosses = float(sys.argv[11])
     except Exception:
         # error	= True
         # resp	+= "<p>ERROR: required txCableLosses parameter missing!</p>\n"
@@ -163,19 +212,32 @@ def main(pars):
 
     try:
         # rxCableLosses = float(pars.getvalue("rxCableLosses"))
-        rxCableLosses = float(sys.argv[4])
+        rxCableLosses = float(sys.argv[12])
     except Exception:
         # error	= True
         # resp	+= "<p>ERROR: required rxCableLosses parameter missing!</p>\n"
         pass
 
+    print "At the Start"
 
+    powertAtRx = txPower + txConnectorLosses + txCableLosses + txAntenanGain + \
+                calcFreSpaceLoss(distance, frequency) + rxAntenanGain + \
+                 rxCableLosses + rxConnectorLosses
 
-    profilePoints.append({'fadeMargin':fadeMargin,
-                          'linkAvailability' :calcLinkAvailability(a, b, frequency, distance, rxSensetiviy+powerAtRx),
-                          'farFieldStart':farFieldStart})
+    print "powerattx %f.6"  , powertAtRx
 
-    profilePoints.append({'fresnelShape':fresnelShape(frequency,distance, u)})
+    fadeMargine = -rxSensetiviy + powertAtRx
 
+    fresnelRadius = calcFresnelRadius(distance, frequency)
 
-    print json.dumps(profilePoints)
+    farFieldStart = calcFarField(txAntenanDiameter, frequency)
+
+    profilePoints.append({'fadeMargin':fadeMargine,
+                          'linkAvailability' :calcLinkAvailability(frequency, distance, -rxSensetiviy + powertAtRx),                        'farFieldStart':farFieldStart})
+
+    profilePoints.append(fresnelShape(frequency,distance))
+
+  #  print profilePoints
+    print json.dumps(profilePoints , sort_keys=True, indent=4, separators=(',', ': '))
+
+main(cgi.FieldStorage())
