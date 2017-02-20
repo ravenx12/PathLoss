@@ -76,12 +76,12 @@ def fresnelShape(frequency,distance):
 
     for pointDistance in range(1,int(distance)):
 
-        mantisa = long((300000000/(frequency*1000000000))*pointDistance*(pointDistance*1000-pointDistance))
-        exponant = long(pointDistance+(pointDistance*1000-(pointDistance)))
-        next_point  = math.sqrt(mantisa/exponant)
+        mantisa = float((300000000/(frequency*1000000000))*pointDistance*(pointDistance*1000-pointDistance))
+        exponant = float(pointDistance+(pointDistance*1000-(pointDistance)))
+        next_point  = float(math.sqrt(mantisa/exponant))
 
-        print "mantisa ", mantisa
-        print "exponant ", exponant
+        print "mantisa/exponant ", mantisa/exponant
+        print "next_point ", next_point
 
         fresnelShape.append({'xcoord':pointcount, 'pointDiameter' :next_point})
 
