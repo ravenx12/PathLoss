@@ -47,7 +47,7 @@ TempPath = os.path.join("..", "Resources", "Templates", os.path.splitext(os.path
 
 
 def calcAeGain(AntenanDiameter, frequency):
-    return 17.8*20*math.log10(AntenanDiameter*frequency)
+    return 17.8+20*math.log10(AntenanDiameter*frequency)
 
 def calcFreSpaceLoss(distance, frequency):
     return -20*math.log10(4*3.142*distance*1000/(3/(frequency*10)))
@@ -62,7 +62,7 @@ def calcLinkAvailability(frequency, distance, fadeMargin):
 def calcFresnelRadius(distance, frequency):
 
     frezrad =  17.32*math.sqrt((distance/(4*frequency)))
-    print "frezrad " ,frezrad
+   # print "frezrad " ,frezrad
 
     return frezrad
 
@@ -70,7 +70,6 @@ def fresnelShape(frequency,distance):
 
     sizeOfIncrument = 100
     Increment = distance/sizeOfIncrument
-    print "Increment " , Increment
     pointDistance = 1
     pointcount = 0
     next_point = 0
@@ -78,20 +77,17 @@ def fresnelShape(frequency,distance):
     pointDistance = Increment
 
 #http://www.4gon.co.uk/solutions/technical_fresnel_zones.php
-    for pointDistance in range(1,int(distance)):
-
+    while pointDistance < distance-Increment:
         mantisa = float((3/(frequency))*pointDistance*(distance-pointDistance))
         exponant = float(pointDistance+(distance-(pointDistance)))
-        next_point  = 10* float(math.sqrt(mantisa/exponant))
+        next_point  = round(10* float(math.sqrt(mantisa/exponant)),3)
 
-        print "mantisa/exponant ", mantisa/exponant
-        print "next_point ", next_point
-
-        fresnelShape.append({'xcoord':pointcount, 'pointDiameter' :next_point})
+        fresnelShape.append({'pointDistance':round(pointDistance,3), 'pointDiameter' :next_point})
 
         pointDistance = pointDistance + Increment
-        print "test data: " , pointDistance+Increment
-        print "Increment " , Increment
+      #  print "test data: " , pointDistance
+      #  print "Increment " , Increment
+      #  print "pointcount " , pointcount
         pointcount += 1
 
     return fresnelShape
@@ -102,12 +98,12 @@ def calcFarField(txAntenanDiameter, frequency):
 
 #frequency distance txAntenanDiameter rxAntenanDiameter txAntenanGain rxAntenanGain txPower rxSensetiviy
 #txConnectorLosses rxConnectorLosses txCableLosses rxCableLosses
-
-#18 23 1.2 1.2 23 23 10 -100 1 1 1 1
+# Test Data args
+#18 26.083 1.8 0.8 48.0109 40.96725 15 -100 0 0 0 0
 
 
 def main(pars):
-    print "this is a test"
+
     global Tiles
     profilePoints = []
     frequency = 0
@@ -128,7 +124,7 @@ def main(pars):
    #     = txAntenanGain = rxAntenanGain = txPower = rxSensetiviy = txCableLosses = rxCableLosses = None
     args = sys.argv[1:]
 
-    print ' '.join(args)
+   # print ' '.join(args)
     try:
         # frequency = float(pars.getvalue("frequency"))
         frequency = float(sys.argv[1])
@@ -222,26 +218,29 @@ def main(pars):
         # resp	+= "<p>ERROR: required rxCableLosses parameter missing!</p>\n"
         pass
 
-    print "At the Start"
 
-    powertAtRx = txPower + txConnectorLosses + txCableLosses + txAntenanGain + \
-                calcFreSpaceLoss(distance, frequency) + rxAntenanGain + \
-                 rxCableLosses + rxConnectorLosses
+    powertAtRx = round(txPower - txConnectorLosses - txCableLosses + txAntenanGain + \
+                calcFreSpaceLoss(distance, frequency) + rxAntenanGain - \
+                 rxCableLosses - rxConnectorLosses,3)
 
-    print "powerattx %f.6"  , powertAtRx
 
-    fadeMargine = -rxSensetiviy + powertAtRx
+   # print "TX AE Gain " , calcAeGain(txAntenanDiameter, frequency)
+   # print "RX AE Gain " , calcAeGain(rxAntenanDiameter, frequency)
 
-    fresnelRadius = calcFresnelRadius(distance, frequency)
+    fadeMargine = round(-rxSensetiviy + powertAtRx,3)
 
-    farFieldStart = calcFarField(txAntenanDiameter, frequency)
+    fresnelradius = round(calcFresnelRadius(distance, frequency),3)
+
+    farFieldStart = round(calcFarField(txAntenanDiameter, frequency),3)
 
     profilePoints.append({'fadeMargin':fadeMargine,
-                          'linkAvailability' :calcLinkAvailability(frequency, distance, -rxSensetiviy + powertAtRx),                        'farFieldStart':farFieldStart})
+                          'linkAvailability' :round(calcLinkAvailability(frequency, distance, -rxSensetiviy + powertAtRx),3),
+                          'farFieldStart':farFieldStart,
+                          'Fresnel Radius':fresnelradius})
 
     profilePoints.append(fresnelShape(frequency,distance))
 
   #  print profilePoints
-    print json.dumps(profilePoints , sort_keys=True, indent=4, separators=(',', ': '))
+    print json.dumps(profilePoints , sort_keys=True, indent=2, separators=(',', ': '))
 
 main(cgi.FieldStorage())
