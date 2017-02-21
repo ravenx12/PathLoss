@@ -41,11 +41,6 @@ import json
 
 cgitb.enable()
 
-
-# Template location
-TempPath = os.path.join("..", "Resources", "Templates", os.path.splitext(os.path.basename(__file__))[0] + ".html")
-
-
 def calcAeGain(AntenanDiameter, frequency):
     return 17.8+20*math.log10(AntenanDiameter*frequency)
 
@@ -94,13 +89,12 @@ def fresnelShape(frequency,distance):
 
 
 def calcFarField(txAntenanDiameter, frequency):
-    return (2*math.pow(txAntenanDiameter,2))/(300000000/(frequency*1000000000))
+    return (2*math.pow(txAntenanDiameter,2))/(3/(frequency*10))
 
 #frequency distance txAntenanDiameter rxAntenanDiameter txAntenanGain rxAntenanGain txPower rxSensetiviy
 #txConnectorLosses rxConnectorLosses txCableLosses rxCableLosses
 # Test Data args
 #18 26.083 1.8 0.8 48.0109 40.96725 15 -100 0 0 0 0
-
 
 def main(pars):
 
