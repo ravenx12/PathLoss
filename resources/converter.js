@@ -11,7 +11,7 @@ function dbConvert(power)
 // and returns the power value
 function powerConvert(dB)
 {
-    power = math.power(10,D7/10);
+    power = math.power(10,dB/10);
     return power;
 }
 
