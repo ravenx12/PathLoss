@@ -4,18 +4,19 @@
 #
 #
 #
-#  Inputs:  frequency
-#           distance
-#           txAntenanDiameter
-#           rxAntenanDiameter
-#           txAntenanGain
-#           rxAntenanGain
-#           txPower
-#           rxSensetiviy
-#           txConnectorLosses
-#           rxConnectorLosses
-#           txCableLosses
-#           rxCableLosses
+#  Inputs:  
+#       frequency           Ghz
+#       distance            Km
+#       txAntenanDiameter   m
+#       rxAntenanDiameter   m
+#       txAntenanGain       dB
+#       rxAntenanGain       dB
+#       txPower             watts
+#       rxSensetiviy        dB
+#       txConnectorLosses   dB
+#       rxConnectorLosses   dB
+##      txCableLosses       dB
+#       rxCableLosses       dB
 #
 #
 #  Calculated Fields:
@@ -38,12 +39,6 @@ import cgi
 import cgitb
 import math
 import json
-
-#  "linkCalculations": {
-#    "Fresnel Radius": 10.425,
-#    "fadeMargin": 20.603,
-#    "farFieldStart": 388.8,
-#    "linkAvailability": 0.997
 
 cgitb.enable()
 
