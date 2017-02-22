@@ -1,0 +1,407 @@
+python PathLoss.py 18 26.083 1.8 0.8 48.0109 40.96725 15 -100 0 0 0 0
+{
+  "fresnelArray": [
+    {
+      "pointDiameter": 2.075,
+      "pointDistance": 0.261
+    },
+    {
+      "pointDiameter": 2.919,
+      "pointDistance": 0.522
+    },
+    {
+      "pointDiameter": 3.557,
+      "pointDistance": 0.782
+    },
+    {
+      "pointDiameter": 4.086,
+      "pointDistance": 1.043
+    },
+    {
+      "pointDiameter": 4.544,
+      "pointDistance": 1.304
+    },
+    {
+      "pointDiameter": 4.952,
+      "pointDistance": 1.565
+    },
+    {
+      "pointDiameter": 5.32,
+      "pointDistance": 1.826
+    },
+    {
+      "pointDiameter": 5.656,
+      "pointDistance": 2.087
+    },
+    {
+      "pointDiameter": 5.967,
+      "pointDistance": 2.347
+    },
+    {
+      "pointDiameter": 6.255,
+      "pointDistance": 2.608
+    },
+    {
+      "pointDiameter": 6.524,
+      "pointDistance": 2.869
+    },
+    {
+      "pointDiameter": 6.775,
+      "pointDistance": 3.13
+    },
+    {
+      "pointDiameter": 7.012,
+      "pointDistance": 3.391
+    },
+    {
+      "pointDiameter": 7.235,
+      "pointDistance": 3.652
+    },
+    {
+      "pointDiameter": 7.445,
+      "pointDistance": 3.912
+    },
+    {
+      "pointDiameter": 7.644,
+      "pointDistance": 4.173
+    },
+    {
+      "pointDiameter": 7.832,
+      "pointDistance": 4.434
+    },
+    {
+      "pointDiameter": 8.01,
+      "pointDistance": 4.695
+    },
+    {
+      "pointDiameter": 8.179,
+      "pointDistance": 4.956
+    },
+    {
+      "pointDiameter": 8.34,
+      "pointDistance": 5.217
+    },
+    {
+      "pointDiameter": 8.492,
+      "pointDistance": 5.477
+    },
+    {
+      "pointDiameter": 8.637,
+      "pointDistance": 5.738
+    },
+    {
+      "pointDiameter": 8.774,
+      "pointDistance": 5.999
+    },
+    {
+      "pointDiameter": 8.905,
+      "pointDistance": 6.26
+    },
+    {
+      "pointDiameter": 9.028,
+      "pointDistance": 6.521
+    },
+    {
+      "pointDiameter": 9.145,
+      "pointDistance": 6.782
+    },
+    {
+      "pointDiameter": 9.256,
+      "pointDistance": 7.042
+    },
+    {
+      "pointDiameter": 9.362,
+      "pointDistance": 7.303
+    },
+    {
+      "pointDiameter": 9.461,
+      "pointDistance": 7.564
+    },
+    {
+      "pointDiameter": 9.555,
+      "pointDistance": 7.825
+    },
+    {
+      "pointDiameter": 9.643,
+      "pointDistance": 8.086
+    },
+    {
+      "pointDiameter": 9.726,
+      "pointDistance": 8.347
+    },
+    {
+      "pointDiameter": 9.804,
+      "pointDistance": 8.607
+    },
+    {
+      "pointDiameter": 9.877,
+      "pointDistance": 8.868
+    },
+    {
+      "pointDiameter": 9.945,
+      "pointDistance": 9.129
+    },
+    {
+      "pointDiameter": 10.008,
+      "pointDistance": 9.39
+    },
+    {
+      "pointDiameter": 10.066,
+      "pointDistance": 9.651
+    },
+    {
+      "pointDiameter": 10.12,
+      "pointDistance": 9.912
+    },
+    {
+      "pointDiameter": 10.17,
+      "pointDistance": 10.172
+    },
+    {
+      "pointDiameter": 10.214,
+      "pointDistance": 10.433
+    },
+    {
+      "pointDiameter": 10.255,
+      "pointDistance": 10.694
+    },
+    {
+      "pointDiameter": 10.291,
+      "pointDistance": 10.955
+    },
+    {
+      "pointDiameter": 10.322,
+      "pointDistance": 11.216
+    },
+    {
+      "pointDiameter": 10.35,
+      "pointDistance": 11.477
+    },
+    {
+      "pointDiameter": 10.373,
+      "pointDistance": 11.737
+    },
+    {
+      "pointDiameter": 10.392,
+      "pointDistance": 11.998
+    },
+    {
+      "pointDiameter": 10.406,
+      "pointDistance": 12.259
+    },
+    {
+      "pointDiameter": 10.417,
+      "pointDistance": 12.52
+    },
+    {
+      "pointDiameter": 10.423,
+      "pointDistance": 12.781
+    },
+    {
+      "pointDiameter": 10.425,
+      "pointDistance": 13.042
+    },
+    {
+      "pointDiameter": 10.423,
+      "pointDistance": 13.302
+    },
+    {
+      "pointDiameter": 10.417,
+      "pointDistance": 13.563
+    },
+    {
+      "pointDiameter": 10.406,
+      "pointDistance": 13.824
+    },
+    {
+      "pointDiameter": 10.392,
+      "pointDistance": 14.085
+    },
+    {
+      "pointDiameter": 10.373,
+      "pointDistance": 14.346
+    },
+    {
+      "pointDiameter": 10.35,
+      "pointDistance": 14.606
+    },
+    {
+      "pointDiameter": 10.322,
+      "pointDistance": 14.867
+    },
+    {
+      "pointDiameter": 10.291,
+      "pointDistance": 15.128
+    },
+    {
+      "pointDiameter": 10.255,
+      "pointDistance": 15.389
+    },
+    {
+      "pointDiameter": 10.214,
+      "pointDistance": 15.65
+    },
+    {
+      "pointDiameter": 10.17,
+      "pointDistance": 15.911
+    },
+    {
+      "pointDiameter": 10.12,
+      "pointDistance": 16.171
+    },
+    {
+      "pointDiameter": 10.066,
+      "pointDistance": 16.432
+    },
+    {
+      "pointDiameter": 10.008,
+      "pointDistance": 16.693
+    },
+    {
+      "pointDiameter": 9.945,
+      "pointDistance": 16.954
+    },
+    {
+      "pointDiameter": 9.877,
+      "pointDistance": 17.215
+    },
+    {
+      "pointDiameter": 9.804,
+      "pointDistance": 17.476
+    },
+    {
+      "pointDiameter": 9.726,
+      "pointDistance": 17.736
+    },
+    {
+      "pointDiameter": 9.643,
+      "pointDistance": 17.997
+    },
+    {
+      "pointDiameter": 9.555,
+      "pointDistance": 18.258
+    },
+    {
+      "pointDiameter": 9.461,
+      "pointDistance": 18.519
+    },
+    {
+      "pointDiameter": 9.362,
+      "pointDistance": 18.78
+    },
+    {
+      "pointDiameter": 9.256,
+      "pointDistance": 19.041
+    },
+    {
+      "pointDiameter": 9.145,
+      "pointDistance": 19.301
+    },
+    {
+      "pointDiameter": 9.028,
+      "pointDistance": 19.562
+    },
+    {
+      "pointDiameter": 8.905,
+      "pointDistance": 19.823
+    },
+    {
+      "pointDiameter": 8.774,
+      "pointDistance": 20.084
+    },
+    {
+      "pointDiameter": 8.637,
+      "pointDistance": 20.345
+    },
+    {
+      "pointDiameter": 8.492,
+      "pointDistance": 20.606
+    },
+    {
+      "pointDiameter": 8.34,
+      "pointDistance": 20.866
+    },
+    {
+      "pointDiameter": 8.179,
+      "pointDistance": 21.127
+    },
+    {
+      "pointDiameter": 8.01,
+      "pointDistance": 21.388
+    },
+    {
+      "pointDiameter": 7.832,
+      "pointDistance": 21.649
+    },
+    {
+      "pointDiameter": 7.644,
+      "pointDistance": 21.91
+    },
+    {
+      "pointDiameter": 7.445,
+      "pointDistance": 22.171
+    },
+    {
+      "pointDiameter": 7.235,
+      "pointDistance": 22.431
+    },
+    {
+      "pointDiameter": 7.012,
+      "pointDistance": 22.692
+    },
+    {
+      "pointDiameter": 6.775,
+      "pointDistance": 22.953
+    },
+    {
+      "pointDiameter": 6.524,
+      "pointDistance": 23.214
+    },
+    {
+      "pointDiameter": 6.255,
+      "pointDistance": 23.475
+    },
+    {
+      "pointDiameter": 5.967,
+      "pointDistance": 23.736
+    },
+    {
+      "pointDiameter": 5.656,
+      "pointDistance": 23.996
+    },
+    {
+      "pointDiameter": 5.32,
+      "pointDistance": 24.257
+    },
+    {
+      "pointDiameter": 4.952,
+      "pointDistance": 24.518
+    },
+    {
+      "pointDiameter": 4.544,
+      "pointDistance": 24.779
+    },
+    {
+      "pointDiameter": 4.086,
+      "pointDistance": 25.04
+    },
+    {
+      "pointDiameter": 3.557,
+      "pointDistance": 25.301
+    },
+    {
+      "pointDiameter": 2.919,
+      "pointDistance": 25.561
+    },
+    {
+      "pointDiameter": 2.075,
+      "pointDistance": 25.822
+    }
+  ],
+  "linkCalculations": {
+    "Fresnel Radius": 10.425,
+    "fadeMargin": 58.103,
+    "farFieldStart": 388.8,
+    "linkAvailability": 1.0
+  }
+}
