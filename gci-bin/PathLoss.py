@@ -227,14 +227,16 @@ def main(pars):
 
     farFieldStart = round(calcFarField(txAntenanDiameter, frequency),3)
 
-    profilePoints.append({'fadeMargin':fadeMargine,
+    linkCalculations = {'fadeMargin':fadeMargine,
                           'linkAvailability' :round(calcLinkAvailability(frequency, distance, -rxSensetiviy + powertAtRx),3),
                           'farFieldStart':farFieldStart,
-                          'Fresnel Radius':fresnelradius})
+                          'Fresnel Radius':fresnelradius}
 
-    profilePoints.append(fresnelShape(frequency,distance))
+    fresnelArray = fresnelShape(frequency,distance)
 
+    data = {"fresnelArray":fresnelArray, "linkCalculations":linkCalculations }
   #  print profilePoints
-    print json.dumps(profilePoints , sort_keys=True, indent=2, separators=(',', ': '))
+    print json.dumps(data , sort_keys=True, indent=2, separators=(',', ': '))
 
 main(cgi.FieldStorage())
+
