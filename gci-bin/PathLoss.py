@@ -39,6 +39,12 @@ import cgitb
 import math
 import json
 
+#  "linkCalculations": {
+#    "Fresnel Radius": 10.425,
+#    "fadeMargin": 20.603,
+#    "farFieldStart": 388.8,
+#    "linkAvailability": 0.997
+
 cgitb.enable()
 
 def calcAeGain(AntenanDiameter, frequency):
