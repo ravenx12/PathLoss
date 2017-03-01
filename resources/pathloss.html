@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+   <meta charset="utf-8">
+   <title>PathLoss</title>
+
+   <!-- CSS -->
+   <link rel="stylesheet" href="pathloss.css">
+   <link rel="stylesheet" href="../lib/jquery-ui-1.11.4/jquery-ui.min.css">
+   <link rel="stylesheet" href="../lib/bootstrap-3.3.7/css/bootstrap.min.css">
+   <link rel="stylesheet" href="../lib/cookiebar/jquery.cookiebar.css" />
+
+   <!-- JS -->
+   <script type="text/javascript" src="../lib/jquery-3.1.1.min.js"></script>
+     
+   <script type="text/javascript" src="../lib/jquery-ui-1.11.4/jquery-ui.min.js"></script> 
+   <script type="text/javascript" src="../lib/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="pathloss.js"></script>
+   <script type="text/javascript" src="../lib/plotly.js/dist/plotly.min.js"></script>
+   <script type="text/javascript" src="../lib/js-cookie/js.cookie.js"></script>
+   <script type="text/javascript" src="../lib/cookiebar/jquery.cookiebar.js"></script>
+
+<script>
+document.write('<style>body { visibility: hidden; } </style>');
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+    initFadeIn();
+});
+
+function initFadeIn() {
+    jQuery("body").css("visibility","visible");
+    jQuery("body").css("display","none");
+    jQuery("body").fadeIn(10);
+}
+</script>
+
+</head>
+
+<body style="background-color: #f5efe6">
+
+	<div class="row">
+	<h4><p align="center">PathLoss</p></h4>
+	<p align="center"><img src="../img/pathloss-diamond.png" alt="profile" style="width: 1140px; height: 100px;"></p>
+	</div>
+
+	<div class="container">
+		<div id="row" style="background-color: white;">
+
+			<div class="row">&nbsp;</div>
+
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<div class="panel panel-default">
+						<div class="panel-heading">Input</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-6">
+									<label for="frequency">Frequency:</label>
+									<input type="text" size="8" id="txlat" name="freq">
+								</div>
+								<div class="col-md-6">
+									<label for="distance">Distance:</label>
+									<input type="text" size="8" id="distance" name="distance"> 
+								</div>
+							</div>				
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-5">
+					<div class="panel panel-default">
+						<div class="panel-heading">Transmit Settings</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4">
+									<label for="txDiameter">Antenna &#8709;:</label>
+									<input type="text" size="8" id="txDiameter" name="txDiameter">
+								</div>
+								<div class="col-md-4">
+									<label for="txGain">Antenna Gain:</label>
+									<input type="text" size="8" id="txGain" name="txGain"> 
+								</div>
+								<div class="col-md-4">
+									<label for="txPower">Power:</label>
+									<input type="text" size="8" id="txPower" name="txPower"> 
+								</div>
+							</div>
+							<div class="row">&nbsp;</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label for="txDiameter">Connector Losses:</label>
+									<input type="text" size="8" id="txDiameter" name="txDiameter">
+								</div>
+								<div class="col-md-5">
+									<label for="txGain">Cable Losses:</label>
+									<input type="text" size="8" id="txGain" name="txGain"> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="panel panel-default">
+						<div class="panel-heading">Receive Settings</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4">
+									<label for="rxDiameter">Antenna &#8709;:</label>
+									<input type="text" size="8" id="rxDiameter" name="rxDiameter">
+								</div>
+								<div class="col-md-4">
+									<label for="rxGain">Antenna Gain:</label>
+									<input type="text" size="8" id="rxGain" name="rxGain"> 
+								</div>
+								<div class="col-md-4">
+									<label for="rxPower">Power:</label>
+									<input type="text" size="8" id="rxPower" name="rxPower"> 
+								</div>
+							</div>				
+							<div class="row">&nbsp;</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label for="rxDiameter">Connector Losses:</label>
+									<input type="text" size="8" id="rxDiameter" name="rxDiameter">
+								</div>
+								<div class="col-md-5">
+									<label for="rxGain">Cable Losses:</label>
+									<input type="text" size="8" id="rxGain" name="rxGain"> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row">
+						<div style="text-align: right" class="col-md-8">
+						</div>
+						<div style="text-align: right" class="col-md-3">
+							<button type="submit" class="btn btn-primary" id="btnSubmit">
+								Create PathLoss
+							</button>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+				</div>
+			</div>						
+	
+			<div class="row">&nbsp;</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<p>Fresnel Radius:&nbsp;<label id="fresnelRadius">&nbsp;</label></p>
+					<p>Far Field Start:&nbsp;<label id="farFieldStart">&nbsp;</label></p>
+					<p>Fade Margin:&nbsp;<label id="fadeMargin">&nbsp;</label></p>
+					<p>Link Availability:&nbsp;<label id="linkAvailability">&nbsp;</label></p>
+				</div>				
+			</div>
+
+			<div class="row">&nbsp;</div>
+
+			<div class="row">				
+				<div id="pathlossDiv" style="margin:0px auto;display:block; height: 700px"></div>
+			</div>		
+
+			<div class="row">&nbsp;</div>
+		</div>
+	</div>
+	<br/>
+</body>
+</html>
