@@ -75,7 +75,7 @@ def fresnelShape(frequency,distance):
         exponant = float(pointDistance+(distance-(pointDistance)))
         next_point  = round(10* float(math.sqrt(mantisa/exponant)),3)
 
-        fresnelShape.append({'pointDistance':round(pointDistance,3), 'pointDiameter' :next_point})
+        fresnelShape.append({'pointDistance':round(pointDistance,3), 'pointRadius' :next_point})
 
         pointDistance = pointDistance + Increment
         pointcount += 1
