@@ -1,18 +1,19 @@
 #!/usr/bin/python
 
-#  Inputs:  
+#  Inputs:
+#    The units of the input fields are:
 #       frequency           Ghz
 #       distance            Km
-#       txAntennaDiameter   m
-#       rxAntennaDiameter   m
+#       txAntennaDiameter   m   Used to calculate the start of the far field
+#       rxAntennaDiameter   m   Used to calculate the start of the far field
 #       txAntennaGain       dB
 #       rxAntennaGain       dB
-#       txPower             watts
-#       rxSensetivity        dB
-#       txConnectorLosses   dB
-#       rxConnectorLosses   dB
-##      txCableLosses       dB
-#       rxCableLosses       dB
+#       txPower             dB
+#       rxSensetivity      -dB
+#       txConnectorLosses   dB  The total losses due to connectors
+#       rxConnectorLosses   dB  The total losses due to connectors
+#       txCableLosses       dB  The total losses in the connecting cables
+#       rxCableLosses       dB  The total losses in the connecting cables
 #
 #
 #  Calculated Fields:
@@ -25,8 +26,14 @@
 #           angleTo MidPointfresnel
 #           farFieldStart
 #
-#
-#
+#   Output:
+#           fadeMargin
+#           linkAvailability
+#           farFieldStart
+#           fresnelRadius
+#           fresnelRadiusPoints[]
+
+
 
 import os
 import sys

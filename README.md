@@ -1,18 +1,36 @@
-# PathLoss
+ PathLoss
 
 This program calculate the signal PathLoss of a signal between the Tx and Rx.  Additionally it will calculate:
 the anticipated availablility of the path, the fresnel zone dimentions and the point at which the far field is established.
   Inputs:  
-  
-        frequency           Ghz
-        distance            Km
-        txAntenanDiameter   m
-        rxAntenanDiameter   m
-        txAntenanGain       dB
-        rxAntenanGain       dB
-        txPower             watts
-        rxSensetiviy        dB
-        txConnectorLosses   dB
-        rxConnectorLosses   dB
-        txCableLosses       dB
-        rxCableLosses       dB
+    The units of the input fields are:
+       frequency           Ghz  
+       distance            Km
+       txAntennaDiameter   m   Used to calculate the start of the far field
+       rxAntennaDiameter   m   Used to calculate the start of the far field
+       txAntennaGain       dB
+       rxAntennaGain       dB
+       txPower             dB
+       rxSensetivity      -dB
+       txConnectorLosses   dB  The total losses due to connectors
+       rxConnectorLosses   dB  The total losses due to connectors
+       txCableLosses       dB  The total losses in the connecting cables
+       rxCableLosses       dB  The total losses in the connecting cables
+
+
+  Calculated Fields:
+           freeSpaceLoss
+           powerAtRx
+           fadeMargin
+           linkAvailability
+           fresnelRadius
+           fresnelRadiusPoints[]
+           angleTo MidPointfresnel
+           farFieldStart
+
+   Output:
+           fadeMargin
+           linkAvailability
+           farFieldStart
+           fresnelRadius
+           fresnelRadiusPoints[]
