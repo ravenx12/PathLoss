@@ -223,8 +223,12 @@ def main(pars):
 
         farFieldStart = round(calcFarField(txAntennaDiameter, frequency),3)
 
+        linkAvail = round(calcLinkAvailability(frequency, distance, -rxSensetivity + powertAtRx),3)
+        if(linkAvail < 0):
+            linkAvail = 0
+
         linkCalculations = {'fadeMargin':fadeMargine,
-                'linkAvailability' :round(calcLinkAvailability(frequency, distance, -rxSensetivity + powertAtRx),3),
+                'linkAvailability' :linkAvail,
                 'farFieldStart':farFieldStart,
                 'fresnelRadius':fresnelradius}
 
