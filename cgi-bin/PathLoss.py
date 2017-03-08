@@ -217,7 +217,7 @@ def main(pars):
         calcFreSpaceLoss(distance, frequency) + rxAntennaGain - \
         rxCableLosses - rxConnectorLosses,3)
 
-        fadeMargine = round(-rxSensetivity + powertAtRx,3)
+        fadeMargin = round(-rxSensetivity + powertAtRx,3)
 
         fresnelradius = round(calcFresnelRadius(distance, frequency),3)
 
@@ -227,7 +227,7 @@ def main(pars):
         if(linkAvail < 0):
             linkAvail = 0
 
-        linkCalculations = {'fadeMargin':fadeMargine,
+        linkCalculations = {'fadeMargin':fadeMargin,
                 'linkAvailability' :linkAvail,
                 'farFieldStart':farFieldStart,
                 'fresnelRadius':fresnelradius}

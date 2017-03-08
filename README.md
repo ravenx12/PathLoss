@@ -1,7 +1,10 @@
  PathLoss
 
-This program calculate the signal PathLoss of a signal between the Tx and Rx.  Additionally it will calculate:
-the anticipated availablility of the path, the fresnel zone dimentions and the point at which the far field is established.
+This program calculate the signal PathLoss of a signal between the Tx and Rx.  
+Additionally it will calculate:
+    The anticipated availablility of the path, 
+    The fresnel zone dimentions and the point at which the far field is established.
+  
   Inputs:  
     The units of the input fields are:
        frequency           Ghz  
@@ -25,7 +28,6 @@ the anticipated availablility of the path, the fresnel zone dimentions and the p
            linkAvailability
            fresnelRadius
            fresnelRadiusPoints[]
-           angleTo MidPointfresnel
            farFieldStart
 
    Output:
