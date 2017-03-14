@@ -2,23 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
    <meta charset="utf-8">
-   <title>PathLoss</title>
+   <title>Pathloss</title>
 
    <!-- CSS -->
-   <link rel="stylesheet" href="pathloss.css">
-   <link rel="stylesheet" href="../lib/jquery-ui-1.11.4/jquery-ui.min.css">
-   <link rel="stylesheet" href="../lib/bootstrap-3.3.7/css/bootstrap.min.css">
-   <link rel="stylesheet" href="../lib/cookiebar/jquery.cookiebar.css" />
+   <link rel="stylesheet" href="css/pathloss.css">
+   <link rel="stylesheet" href="lib/jquery-ui-1.11.4/jquery-ui.min.css">
+   <link rel="stylesheet" href="lib/bootstrap-3.3.7/css/bootstrap.min.css">
+   <link rel="stylesheet" href="lib/cookiebar/jquery.cookiebar.css" />
 
    <!-- JS -->
-   <script type="text/javascript" src="../lib/jquery-3.1.1.min.js"></script>
+   <script type="text/javascript" src="lib/jquery-3.1.1.min.js"></script>
      
-   <script type="text/javascript" src="../lib/jquery-ui-1.11.4/jquery-ui.min.js"></script> 
-   <script type="text/javascript" src="../lib/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-   <script type="text/javascript" src="pathloss.js"></script>
-   <script type="text/javascript" src="../lib/plotly.js/dist/plotly.min.js"></script>
-   <script type="text/javascript" src="../lib/js-cookie/js.cookie.js"></script>
-   <script type="text/javascript" src="../lib/cookiebar/jquery.cookiebar.js"></script>
+   <script type="text/javascript" src="lib/jquery-ui-1.11.4/jquery-ui.min.js"></script> 
+   <script type="text/javascript" src="lib/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="js/pathloss.js"></script>
+   <script type="text/javascript" src="lib/plotly.js/dist/plotly.min.js"></script>
+   <script type="text/javascript" src="lib/js-cookie/js.cookie.js"></script>
+   <script type="text/javascript" src="lib/cookiebar/jquery.cookiebar.js"></script>
 
 <script>
 document.write('<style>body { visibility: hidden; } </style>');
@@ -36,13 +36,40 @@ function initFadeIn() {
 }
 </script>
 
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	
+	ga('create', 'UA-71958649-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
 </head>
 
-<body style="background-color: #f5efe6">
+<body style="background-color: white">
 
 	<div class="row">
-	<h4><p align="center">PathLoss</p></h4>
-	<p align="center"><img src="../img/pathloss-diamond.png" alt="profile" style="width: 1140px; height: 100px;"></p>
+	<h2><p align="center">Pathloss</p></h2>
+	
+	<div class="menu_box">
+    <p align="center">
+      <a href="index.html">Area</A>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="p2p.html">Point-to-Point</A>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <A href="pathloss.html">Pathloss</A>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <A href="lineofsight.html">Line-of-Sight</A>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <A href="usage.html">Usage tips</A>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <A href="credits.html">Credits</A>
+    </p>
+	</div>
+
+	<p align="center"><img src="img/pathloss-diamond.png" alt="profile" style="width: 1140px; height: 100px;"></p>
 	</div>
 
 	<div class="container">
@@ -51,105 +78,108 @@ function initFadeIn() {
 			<div class="row">&nbsp;</div>
 
 			<div class="row">
-				<div class="col-md-1"></div>
-				<div class="col-md-10">
+			<p>This program calculates the signal PathLoss of a signal between the Tx and Rx. Additionally, it will calculate: the anticipated availability of the path, the fresnel zone dimensions and the point at which the far field is established.</p>
+			
+			<p>Inputs:
+The units of the input fields are: Frequency (GHz), 
+Distance (Km), txAntennaDiameter (m). Used to calculate the start of the far field: rxAntennaDiameter (m). Used to calculate the start of the far field: txAntennaGain (dB),  rxAntennaGain (dB), txPower (dB), rxSensetivity (-dB) and txConnectorLosses (dB). The total losses due to connectors: rxConnectorLosses (dB). The total losses due to connectors: txCableLosses (dB). The total losses in the connecting cables: rxCableLosses (dB).</p>
+
+<p>Calculated Fields: Fresnel Radius, Far Field Start, Fade Margin and Link Availability.</p>
+			</div>
+
+			<div class="row">&nbsp;</div>
+			
+			<div class="row">
+				<div class="col-md-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">Input</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-6">
-									<label for="frequency">Frequency:</label>
-									<input type="text" size="8" id="txlat" name="freq">
+									<label for="frequency">Frequency (GHz):</label>									
+									<input type="text" size="8" id="frequency" name="frequency">
 								</div>
-								<div class="col-md-6">
-									<label for="distance">Distance:</label>
-									<input type="text" size="8" id="distance" name="distance"> 
+								<div class="col-md-4">
+									<label for="distance">Distance (Km):</label>
+									<input type="text" size="8" id="distance" name="distance" />
 								</div>
 							</div>				
 						</div>
 					</div>
 				</div>
-				<div class="col-md-1"></div>
 			</div>
 			<div class="row">
-				<div class="col-md-1"></div>
-				<div class="col-md-5">
+				<div class="col-md-12">
 					<div class="panel panel-default">
-						<div class="panel-heading">Transmit Settings</div>
+						<div class="panel-heading" style="background-color: lightblue!important">Transmit Settings</div>
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-4">
-									<label for="txDiameter">Antenna &#8709;:</label>
-									<input type="text" size="8" id="txDiameter" name="txDiameter">
+								<div class="col-md-2">
+									<label for="txDiameter">ANT DIA (m):</label>
+									<input type="text" size="4" id="txDiameter" name="txDiameter">
 								</div>
-								<div class="col-md-4">
-									<label for="txGain">Antenna Gain:</label>
-									<input type="text" size="8" id="txGain" name="txGain"> 
+								<div class="col-md-2">
+									<label for="txGain">ANT Gain:</label>
+									<input type="text" size="6" id="txGain" name="txGain"> 
 								</div>
-								<div class="col-md-4">
-									<label for="txPower">Power:</label>
-									<input type="text" size="8" id="txPower" name="txPower"> 
+								<div class="col-md-2">
+									<label for="txPower">Tx Power:</label>
+									<input type="text" size="4" id="txPower" name="txPower"> 
 								</div>
-							</div>
-							<div class="row">&nbsp;</div>
-							<div class="row">
-								<div class="col-md-6">
-									<label for="txDiameter">Connector Losses:</label>
-									<input type="text" size="8" id="txDiameter" name="txDiameter">
+								<div class="col-md-3">
+									<label for="txConnector">Connector Losses:</label>
+									<input type="text" size="4" id="txConnector" name="txConnector">
 								</div>
-								<div class="col-md-5">
-									<label for="txGain">Cable Losses:</label>
-									<input type="text" size="8" id="txGain" name="txGain"> 
+								<div class="col-md-3">
+									<label for="txCable">Cable Losses:</label>
+									<input type="text" size="4" id="txCable" name="txCable"> 
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-5">
+			</div>
+			<div class="row">
+				<div class="col-md-12">
 					<div class="panel panel-default">
-						<div class="panel-heading">Receive Settings</div>
+						<div class="panel-heading" style="background-color: salmon!important">Receive Settings</div>
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-4">
-									<label for="rxDiameter">Antenna &#8709;:</label>
-									<input type="text" size="8" id="rxDiameter" name="rxDiameter">
+								<div class="col-md-2">
+									<label for="rxDiameter">ANT DIA (m):</label>
+									<input type="text" size="4" id="rxDiameter" name="rxDiameter">
 								</div>
-								<div class="col-md-4">
-									<label for="rxGain">Antenna Gain:</label>
-									<input type="text" size="8" id="rxGain" name="rxGain"> 
+								<div class="col-md-2">
+									<label for="rxGain">ANT Gain:</label>
+									<input type="text" size="6" id="rxGain" name="rxGain"> 
 								</div>
-								<div class="col-md-4">
-									<label for="rxPower">Power:</label>
-									<input type="text" size="8" id="rxPower" name="rxPower"> 
+								<div class="col-md-2">
+									<label for="rxSensetivity">Rx SENS:</label>
+									<input type="text" size="5" id="rxSensetivity" name="rxSensetivity"> 
 								</div>
-							</div>				
-							<div class="row">&nbsp;</div>
-							<div class="row">
-								<div class="col-md-6">
-									<label for="rxDiameter">Connector Losses:</label>
-									<input type="text" size="8" id="rxDiameter" name="rxDiameter">
+								<div class="col-md-3">
+									<label for="rxConnector">Connector Losses:</label>
+									<input type="text" size="4" id="rxConnector" name="rxConnector">
 								</div>
-								<div class="col-md-5">
-									<label for="rxGain">Cable Losses:</label>
-									<input type="text" size="8" id="rxGain" name="rxGain"> 
+								<div class="col-md-3">
+									<label for="rxCable">Cable Losses:</label>
+									<input type="text" size="4" id="rxCable" name="rxCable"> 
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-1"></div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="row">
-						<div style="text-align: right" class="col-md-8">
+						<div style="text-align: right" class="col-md-9">
 						</div>
 						<div style="text-align: right" class="col-md-3">
 							<button type="submit" class="btn btn-primary" id="btnSubmit">
 								Create PathLoss
 							</button>
 						</div>
-						<div class="col-md-1"></div>
 					</div>
 				</div>
 			</div>						
@@ -158,14 +188,31 @@ function initFadeIn() {
 
 			<div class="row">
 				<div class="col-md-12">
-					<p>Fresnel Radius:&nbsp;<label id="fresnelRadius">&nbsp;</label></p>
-					<p>Far Field Start:&nbsp;<label id="farFieldStart">&nbsp;</label></p>
-					<p>Fade Margin:&nbsp;<label id="fadeMargin">&nbsp;</label></p>
-					<p>Link Availability:&nbsp;<label id="linkAvailability">&nbsp;</label></p>
+					<div class="panel panel-default">
+						<div class="panel-heading" style="background-color: lightgreen!important">Results</div>
+						<div class="panel-body">
+						<div class="row">
+							<div class="col-md-3"><label>Fresnel Radius:&nbsp;</label><label id="fresnelRadius">&nbsp;</label></div>
+							<div class="col-md-3"><label>Far Field Start:&nbsp;</label><label id="farFieldStart">&nbsp;</label></div>
+							<div class="col-md-3"><label>Fade Margin:&nbsp;</label><label id="fadeMargin">&nbsp;</label></div>
+							<div class="col-md-3"><label>Link Availability:&nbsp;</label><label id="linkAvailability">&nbsp;</label></div
+						</div>
+						<div class="row">
+							
+						</div>
+					</div>
 				</div>				
 			</div>
 
 			<div class="row">&nbsp;</div>
+
+			<div class="row">
+				<div class="col-md-12" style="font-size: 14px">
+					<p><label>Fresnel Output:</label></p>
+					<textarea style="width: 100%; height: 600px; border: none; font-family: monospace; font-size: 18px" readonly id="fresnelOut">
+					</textarea>
+				</div>				
+			</div>
 
 			<div class="row">				
 				<div id="pathlossDiv" style="margin:0px auto;display:block; height: 700px"></div>

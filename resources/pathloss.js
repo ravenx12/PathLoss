@@ -3,48 +3,80 @@
 var map = undefined;
 var txMarker = undefined;
 var rxMarker = undefined;
+var units = 'db';
 
 $(document).ready(function() {    	 
 	$("#loader").hide();
+		
+	$("#frequency").val(18);
+	$("#distance").val(26.083);
+
+	$("#txConnector").val(0);
+	$("#txCable").val(0);
+	$("#txDiameter").val(1.8);
+	$("#txGain").val(48.0109);
+	$("#txPower").val(15);
 	
-	$("#txlat").keyup(function(){
-	    update();
-	});
-	$("#txlng").keyup(function(){
-	    update();
-	});
-	$("#rxlat").keyup(function(){
-	    update();
-	});
-	$("#rxlng").keyup(function(){
-	    update();
-	});
 	
-	// Page has loaded now see if we have data in the URL
-/*	if (/txLng/.test(window.location.href)) {
-		profileOnPageLoad();
+	$("#rxConnector").val(0);
+	$("#rxCable").val(0);
+	$("#rxDiameter").val(0.8);
+	$("#rxGain").val(40.9673);
+	$("#rxSensetivity").val(-100);
+
+    // Page has loaded now see if we have data in the URL
+	if (/frequency/.test(window.location.href)) {
+		$("#frequency").val(getURLParameter("frequency"));
+		$("#distance").val(getURLParameter("distance"));
+	
+		$("#txConnector").val(getURLParameter("txConnectorLosses"));
+		$("#txCable").val(getURLParameter("txCableLosses"));
+		$("#txDiameter").val(getURLParameter("txAntennaDiameter"));
+		$("#txGain").val(getURLParameter("txAntennaGain"));
+		$("#txPower").val(getURLParameter("txPower"));
+		
+		$("#rxConnector").val(getURLParameter("rxConnectorLosses"));
+		$("#rxCable").val(getURLParameter("rxCableLosses"));
+		$("#rxDiameter").val(getURLParameter("rxAntennaDiameter"));
+		$("#rxGain").val(getURLParameter("rxAntennaGain"));
+		$("#rxSensetivity").val(getURLParameter("rxSensetivity"));
 	}
-*/	
+		    
 	$("#btnSubmit").click(function(){
-/*		var txLat = $("#txlat").val();
-		var txLng = $("#txlng").val();
-		var rxLat = $("#rxlat").val();
-		var rxLng = $("#rxlng").val();
-*/
-/*		
-		Cookies.set('txlatProfile', txLat, { expires: 3650, path: '' });
-		Cookies.set('txlngProfile', txLng, { expires: 3650, path: '' });
-		Cookies.set('rxlatProfile', rxLat, { expires: 3650, path: '' });
-		Cookies.set('rxlngProfile', rxLng, { expires: 3650, path: '' }); 
+		var frequency = $("#frequency").val();
+		var distance = $("#distance").val();
+		var txDiameter = $("#txDiameter").val();
+		var txGain = $("#txGain").val();
+		var txPower = $("#txPower").val();
+		var txConnector = $("#txConnector").val();
+		var txCable = $("#txCable").val();
+		var rxDiameter = $("#rxDiameter").val();
+		var rxGain = $("#rxGain").val();
+		var rxSensetivity = $("#rxSensetivity").val();
+		var rxConnector = $("#rxConnector").val();
+		var rxCable = $("#rxCable").val();
+
+		var getData = "?frequency=" + frequency + 
+		"&distance=" + distance + 
+		"&txAntennaDiameter=" + txDiameter + 
+		"&rxAntennaDiameter=" + rxDiameter + 
+		"&txAntennaGain=" + txGain + 
+		"&rxAntennaGain=" + rxGain + 
+		"&txPower=" + txPower + 
+		"&rxSensetivity=" + rxSensetivity + 
+		"&txConnectorLosses=" + txConnector + 
+		"&rxConnectorLosses=" + rxConnector + 
+		"&txCableLosses=" + txCable + 
+		"&rxCableLosses=" + rxCable;
+
+/*
+	var getData = "?frequency=18" + "&distance=26.083" + "&txAntennaDiameter=1.8" + "&rxAntennaDiameter=0.8" + 
+	"&txAntennaGain=48.0109" + "&rxAntennaGain=40.96725" + "&txPower=15" + "&rxSensetivity=-100" + 
+	"&txConnectorLosses=0" + "&rxConnectorLosses=0" + "&txCableLosses=0" + "&rxCableLosses=0";
 */
 		
-		var getData = "?frequency=18" + "&distance=26.083" + "&txAntennaDiameter=1.8" + "&rxAntennaDiameter=0.8" + 
-		"&txAntennaGain=48.0109" + "&rxAntennaGain=40.96725" + "&txPower=15" + "&rxSensetivity=-100" + 
-		"&txConnectorLosses=0" + "&rxConnectorLosses=0" + "&txCableLosses=0" + "&rxCableLosses=0";
-
-		//console.log(getData);
+		/*console.log(getData);*/
 /*		18 26.083 1.8 0.8 48.0109 40.96725 15 -100 0 0 0 0   */
-		/*/cgi-bin/pathloss.py*/
 	    $.ajax({
 		    url: "/cgi-bin/pathloss.py" + getData,
 		    type: "GET",
@@ -52,16 +84,16 @@ $(document).ready(function() {
                 $("#loader").show();
             },
 		    success: function(response){
-   			    history.pushState({}, null, "http://www.predtest.uk/pathloss/pathloss.html" + getData)
+   			    history.pushState({}, null, "http://www.predtest.uk/pathloss.html" + getData)
 
                 $("#loader").hide();
-                console.log(response);
+                //console.log(response);
 			    if ( (response != null) ) {
-                	//createProfile(response);
-                	  document.getElementById('fresnelRadius').innerText = response.linkCalculations.fresnelRadius;
-                	  document.getElementById('farFieldStart').innerText = response.linkCalculations.farFieldStart;
-                	  document.getElementById('fadeMargin').innerText = response.linkCalculations.fadeMargin;
-                	  document.getElementById('linkAvailability').innerText = response.linkCalculations.linkAvailability;
+                	createPathloss(response);
+                	document.getElementById('fresnelRadius').innerText = response.linkCalculations.fresnelRadius + 'm';
+                	document.getElementById('farFieldStart').innerText = response.linkCalculations.farFieldStart + 'm';
+                	document.getElementById('fadeMargin').innerText = response.linkCalculations.fadeMargin + 'db';
+                	document.getElementById('linkAvailability').innerText = (parseFloat(response.linkCalculations.linkAvailability) * 100) + '%';
 			    } else {
 				    alert("Error: I'm sorry there was a problem generating the pathloss");
 			    }
@@ -74,68 +106,71 @@ $(document).ready(function() {
 		});
 	});
 
-	function createPathloss(data) {		
+	function createPathloss(data) {	
+		var len = data.fresnelArray.length;
 		var x = [];
 		var y = [];
-		var z = [];
-		
-		var len = data.points.length;
-		var startHeight = data.points[0].trueheight - data.points[0].curheight;
-		var endHeight = data.points[len-1].trueheight - data.points[len-1].curheight;
-		var difference = 0;
-		var move = startHeight;
-	
-		difference = startHeight - endHeight;
-		// if difference is positive, start is higher, if 
-		// difference is negative, start is lower
-		
-		var slopeDiff = difference / len;
-		
-		var title = 'Point To Point Pathloss (' + data.points[0].ycoord + ' ' + data.points[0].xcoord + ' to ' + data.points[len-1].ycoord + ' ' + data.points[len-1].xcoord + ')';
+		var output = ""
+
 		for (var i = 0; i < len; i++) {
-			x.push(i);
-			y.push(data.points[i].trueheight - data.points[i].curheight);
-			z.push(move);
-			if (difference < 0) { // need to add our difference
-				move += -slopeDiff
-			} else {
-				move -= slopeDiff
-			}
-		}
+			//x.push(data.fresnelArray[i].pointDistance);
+			//y.push(data.fresnelArray[i].pointDiameter)
+			var temp = "Point #" + i + "\tPoint Distance: " + data.fresnelArray[i].pointDistance + "\t\tPoint Radius: " + data.fresnelArray[i].pointRadius + "\n"
+			output = output + temp;
+		}	
 		
-		var trace = {
-			x: x, 
-			y: y, 
-	  		type: 'scatter',
-	  		mode: 'lines',
-	  		line: {shape: 'spline'},
-	  		fill: 'tozeroy'
+		$("#fresnelOut").val(output);
+		
+	/*	var trace1 = {
+		  x: x,
+		  y: y,
+		  fill: 'tozeroy',
+		  type: 'scatter',
+		  mode: 'none'
 		};
-		var slope = {
-			x: x, 
-			y: z,
-	  		type: 'scatter',
-	  		mode: 'lines',
-	  		line: {shape: 'spline'}
-	  	};
+
+		var x2 = [];
+		var y2 = [];
+		for (var i = 0; i < len; i++) {
+			x2.push(data.fresnelArray[i].pointDistance);
+			y2.push(0 - data.fresnelArray[i].pointDiameter)
+		}	
+		
+		var trace2 = {
+		  x: x2,
+		  y: y2,
+		  fill: 'tozeroy',
+		  type: 'scatter',
+		  mode: 'none'  
+		};
 		
 		
 		var layout = {
-			title: title,
-			showlegend: false,
-			xaxis: {
-				title: '<-- Distance: ' + data.output.dist + 'km -->',
-			    showticklabels: false
-	  		},
-	  		yaxis: {
-	  			title: 'Height (m)'
-	  		}
+		  title: 'Fresnel Plot'
 		};
 		
-		var plotData = [trace, slope];
-		Plotly.newPlot('profileDiv', plotData, layout);	
+		var data = [trace1, trace2];
+		
+		Plotly.newPlot('pathlossDiv', data, layout);
+	*/
 	}
 });
+
+//This function simply takes in power
+// and returns the decibel value
+function dbConvert(power)
+{
+    dB = 10*Math.log10( power/1);
+    return dB;
+}
+
+//This function  takes in decibel
+// and returns the power value
+function powerConvert(dB)
+{
+    power = math.power(10,dB/10);
+    return power;
+}
 
 function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
